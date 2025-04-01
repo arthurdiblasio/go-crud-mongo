@@ -1,14 +1,20 @@
 package usecase
 
-import "github.com/arthurdiblasio/go-crud-mongo/model"
+import (
+	"github.com/arthurdiblasio/go-crud-mongo/model"
+	"github.com/arthurdiblasio/go-crud-mongo/repository"
+)
 
 type ProductUsercase struct {
+	repository repository.ProductRepository
 }
 
-func NewProductUseCase() ProductUsercase {
-	return ProductUsercase{}
+func NewProductUseCase(repository repository.ProductRepository) ProductUsercase {
+	return ProductUsercase{
+		repository,
+	}
 }
 
 func (pu *ProductUsercase) GetProducts() ([]model.Product, error) {
-	return []model.Product{}, nil
+	return pu.repository.GetProducts()
 }

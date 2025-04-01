@@ -3,7 +3,6 @@ package controller
 import (
 	"net/http"
 
-	"github.com/arthurdiblasio/go-crud-mongo/model"
 	"github.com/arthurdiblasio/go-crud-mongo/usecase"
 	"github.com/gin-gonic/gin"
 )
@@ -19,12 +18,10 @@ func NewProductController(usecase usecase.ProductUsercase) productController {
 }
 
 func (p *productController) GetProducts(ctx *gin.Context) {
-	products := []model.Product{
-		{
-			ID:    1,
-			Name:  "Batata",
-			Price: 20,
-		},
+	products, err := p.productUseCase.GetProducts()
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err)
 	}
 
 	ctx.JSON(http.StatusOK, products)
